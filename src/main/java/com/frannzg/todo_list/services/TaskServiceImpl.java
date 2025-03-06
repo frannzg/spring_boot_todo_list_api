@@ -38,7 +38,13 @@ public class TaskServiceImpl implements ITaskService{
        if(task == null){
             throw new IllegalArgumentException("Task not found");
        } else {
+            if(task.getTask() == null || task.getTask().isEmpty()){
+                throw new IllegalArgumentException("Task is empty");
+            } else if(task.getDescription() == null || task.getDescription().isEmpty()){
+                throw new IllegalArgumentException("Description is empty");
+            } else {
             return iTaskRepository.save(task);
+            }
        }
     }
 
