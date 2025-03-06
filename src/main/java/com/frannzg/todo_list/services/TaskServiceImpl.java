@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 import com.frannzg.todo_list.models.Tasks;
 import com.frannzg.todo_list.repository.ITaskRepository;
@@ -19,6 +20,16 @@ public class TaskServiceImpl implements ITaskService{
     public List<Tasks> findAllTasks() {
         List<Tasks> tasks = iTaskRepository.findAll();
         return tasks;
+    }
+
+    @Override
+    public List<Tasks> findTaskByStatus(String status) {
+        if(status == null || status.isEmpty()){
+            throw new IllegalArgumentException("Status is empty");
+        } else {
+            List<Tasks> tasks = iTaskRepository.findByStatus(status);
+            return tasks;
+        }
     }
 
     // Este método retorna un Optional<Tasks> en lugar de un Tasks
